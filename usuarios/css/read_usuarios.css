@@ -1,0 +1,181 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main{
+   display: grid;
+   grid-template-columns: 1fr 2fr;
+   gap: 1rem;
+   position: relative;
+}
+
+#formulario{
+    margin-left: 1rem;
+}
+
+header{
+    background-color: rgb(196, 4, 218);
+    padding: 2rem;
+    width: 100%;
+}
+
+
+#header_app{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+
+#logo_app{
+width: 5rem;
+}
+
+#header_app_name{
+   color: white;
+}
+
+#header_app_legend{
+    font-weight: 700;
+    color: rgb(31, 234, 88);
+}
+
+main{
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.titulos{
+    font-size: 0.5rem;
+}
+
+#lista_usuarios{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.efectos_titulo{
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px
+    #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 
+    0 0 55px #49FF18, 0 0 75px #49ff18;
+}
+
+#img_usuarios_lista_users{
+  width: 5rem;
+  height: 5rem;
+}
+
+.flex{
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+}
+
+.lb_user_list{
+    text-transform: uppercase;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.user_data_listado{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user_data_listado_text{
+    padding: 0.5rem;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.box_shadow_caja{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+     rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+      padding: 2rem;
+      border-radius: 25px;
+}
+
+.bt_user_list{
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: #49FF18;
+}
+
+.bt_user_list_icon{
+    width: 1rem;
+
+}
+
+table{
+    width: 100%;
+}
+
+thead {
+    width: 100%;
+}
+
+th {
+
+}
+
+#txt_pd_direccion{
+    height: 5rem;
+}
+
+#header_app_listado{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.txt1{
+    font-weight: 700;
+    color:brown;
+}
+
+button{
+    font-weight: 700;
+}
+
+#modal_sub_usuarios{
+  padding: 2rem;
+  background-color: #f4f5f4;
+}
+
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.display_none{
+    display: none;
+}
+
+.clas_flex{
+    display: flex;
+    gap: 1rem;
+}
+
+#cuerpo_tabla_sub_users{
+    background-color: white;
+}
