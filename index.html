@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="index.css">
+    <script src="../utilidades/db_coneccion.js"></script>
+    <script src="usuarios/js/users.js"></script>
+    <title>TePrestoOnline</title>
+</head>
+<body>
+    <header>
+          <section id="header_app">
+            <img src="../imagenes/logo_app.webp" alt="" srcset="" id="logo_app">
+            <Span id="header_app_name" class="efectos_titulo">Te Presto Online WEB</Span>
+            <Span id="header_app_legend">Acceso a Clientes</Span>
+          </section>
+    </header>
+    
+    <main>
+        <section class="center box_shadow_caja">
+            <form>
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><img src="imagenes/usuarios.png" alt="" srcset="" class="icon_input"></div>
+                  </div>
+                  <input type="text" class="form-control" id="log_user_name" placeholder="Username">
+                </div>
+
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img src="imagenes/password.png" alt="" srcset="" class="icon_input"></div>
+                    </div>
+                    <input type="password" class="form-control" id="log_user_clave" placeholder="********">
+                </div>
+                <br>
+                <button  class="btn btn-primary">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer></footer>
+</body>    
