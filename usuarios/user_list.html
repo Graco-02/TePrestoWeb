@@ -121,9 +121,24 @@
       var user_personal_contacto_email  =  document.getElementById('user_personal_contacto_email'); 
       var user_personal_contacto_tel    =  document.getElementById('user_personal_contacto_tel');        
       var user_user_name   =  document.getElementById('user_user_name');        
-      var estado   =  document.getElementById('estado');        
+      var estado   =  document.getElementById('estado');      
+
       var bt_guardar    =  document.getElementById('bt_guardar');  
+      var bt_guardar_sub    =  document.getElementById('bt_guardar_sub');  
        
+
+      var sub_user_name_txt                      =  document.getElementById('sub_user_personal_name');
+      var sub_user_LastName_txt                  =  document.getElementById('sub_user_personal_lastname');
+      var sub_user_identificacion_txt            =  document.getElementById('sub_user_personal_identificacion');
+      var sub_tipo_identificacion                =  document.getElementById('sub_tipo_identificacion')
+      var sub_user_personal_direccion_municipio  =  document.getElementById('sub_user_personal_direccion_municipio'); 
+      var sub_user_personal_direccion_sector     =  document.getElementById('sub_user_personal_direccion_sector');
+      var sub_user_personal_direccion_calle      =  document.getElementById('sub_user_personal_direccion_calle');
+      var sub_user_personal_direccion_vivienda   =  document.getElementById('sub_user_personal_direccion_vivienda');
+      var sub_user_personal_contacto_email       =  document.getElementById('sub_user_personal_contacto_email'); 
+      var sub_user_personal_contacto_tel         =  document.getElementById('sub_user_personal_contacto_tel');        
+      var sub_user_user_name                     =  document.getElementById('sub_user_user_name');        
+      var sub_estado                             =  document.getElementById('sub_user_estado');  
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -147,8 +162,8 @@
          // Bucle para recorrer los usuarios
          for (const key in data) {
            if (data.hasOwnProperty(key)) {
-             const usuario = data[key];
-             lista_usuarios.push(usuario);
+               const usuario = data[key];
+               lista_usuarios.push(usuario);
                var nuevaFila = tabla.insertRow(-1);
 
                var id = document. createElement('td');
@@ -166,7 +181,7 @@
                });
 
                bt_sub_users.addEventListener("click", function() {
-                leer_database_sub_usuarios(usuario.id);
+                leer_database_sub_usuarios(usuario);
                });
 
                id.innerHTML = usuario.id;
@@ -268,6 +283,8 @@
              user_user_name.value =''; 
              user_seleccionado = null; 
              estado.value = '1';
+             sub_user_user_name.value  ='';
+             sub_estado.value         = '1';  
       }   
       
       function alertar_guardado() {
@@ -299,6 +316,32 @@
         }
       }
 
+      function guardar_sub() {  
+        if(user_seleccionado!=null){
+        //  setear_datos();
+          user_seleccionado.estado = parseInt(sub_estado.value);  
+          user_seleccionado.usuario = sub_user_user_name.value;
+
+          set(ref(db, 'sub_usuarios/'+user_seleccionado.id), {
+            clave:                  user_seleccionado.clave,
+            contador_clave:         user_seleccionado.contador_clave,
+            estado:                 user_seleccionado.estado,
+            fecha_activacion_unix:  user_seleccionado.fecha_activacion_unix,
+            fecha_alta_humana:      user_seleccionado.fecha_alta_humana,
+            fecha_humana_ult_mod:   user_seleccionado.fecha_humana_ult_mod,
+            fecha_unix:             user_seleccionado.fecha_unix,
+            fecha_unix_ult_mod:     user_seleccionado.fecha_unix_ult_mod,
+            id:                     user_seleccionado.id,
+            usuario:                user_seleccionado.usuario,
+            id_super_usaurio:       user_seleccionado.id_super_usaurio
+          })
+          .then(() => alertar_guardado())
+          .catch((error) => alert('Error Al intentar Ingresar/Modificar Datos . : '+error) );
+        }else{
+          alert('Se debe Seleccionar Un Usuario Primero!!');
+        }
+      }
+
       function setear_datos() {
            //seteo los datos personales de la direccion
            user_seleccionado.datos_personales.direccion.municipio = user_personal_direccion_municipio.value;
@@ -315,10 +358,10 @@
            user_seleccionado.datos_personales.tipo_identificacion  = tipo_identificacion.value;
            //saeteo el nombre de usuario
            user_seleccionado.usuario = user_user_name.value;
-           user_seleccionado.estado = estado.value;
+           user_seleccionado.estado = parseInt(estado.value);
       }
 
-      function leer_database_sub_usuarios(id) {  
+      function leer_database_sub_usuarios(usuario_super) {  
          display_blok_sub_ser();
          const dbref = ref(db);
          const dbref_user = ref(db,'sub_usuarios');
@@ -331,9 +374,10 @@
          for (const key in data) {
            if (data.hasOwnProperty(key)) {
              const usuario = data[key];
-             console.log(usuario);
-            if(usuario.id_super_usaurio == id){//valido que solo muestre los sub usuarios del cliente principal
-               var nuevaFila = tabla.insertRow(-1);
+            
+            if(usuario.id_super_usaurio == usuario_super.id){//valido que solo muestre los sub usuarios del cliente principal
+              console.log("ide user.:"+usuario.id_super_usaurio+" id a evaluar"+usuario_super.id); 
+              var nuevaFila = tabla.insertRow(-1);
 
                var id = document. createElement('td');
                var user = document.createElement('td');
@@ -342,7 +386,8 @@
                bt_ver.classList.add("form-control");
                
                bt_ver.addEventListener("click", function() {
-                //ver_usuario(usuario);
+                ver_sub_usuario(usuario);
+                
                });
 
                id.innerHTML = usuario.id;
@@ -360,7 +405,28 @@
          
       }
 
+      function ver_sub_usuario(user) {
+          user_seleccionado = user;
+          console.log(user.estado);
+          try{
+            sub_user_user_name.value = ''+user.usuario;
+
+            switch (user.estado) {
+              case 1:
+              sub_estado.value ='1';
+                break;
+              case 0:
+              sub_estado.value='0';
+                break;
+            }
+
+        }catch(e){
+           // alert('error al seleccionar usuario incompleto');
+        }
+      }
+
       bt_guardar.addEventListener('click',guardar);
+      bt_guardar_sub.addEventListener('click',guardar_sub);
       
     </script>
 
@@ -368,49 +434,12 @@
       <div class="clas_flex">
         <section id="formulario" class="">
         <form action="">
-           <div class="mb-3 box_shadow_cajax">
-           <fieldset id="form1">
-             <legend>Datos Personales</legend>
-
-             <label for="user_personal_name" class="form-label">Nombres</label>
-             <input type="text" class="form-control txt1" id="user_personal_name" >
-             
-             <label for="user_personal_lastname" class="form-label">Apellidos</label>
-             <input type="text" class="form-control txt1" id="user_personal_lastname" >
-
-
-             <div class="input-group mb-3">
-                 <select name="tipo_identificacion" id="tipo_identificacion" class="form-control txt1">
-                   <option value="CED">CED</option>
-                   <option value="PSS">PSS</option>
-                 </select>&nbsp;
-                 <input type="text" class="form-control txt1" id="user_personal_identificacion" placeholder="001-1111111-1" >
-             </div>
-
-           </fieldset>
-
-           <div class="flex">
-             <fieldset>
-               <legend>Datos Direccion</legend>
-               <input type="text" class="form-control txt1" id="user_personal_direccion_municipio" placeholder="Municipio" >
-               <input type="text" class="form-control txt1" id="user_personal_direccion_sector" placeholder="Sector" >
-               <input type="text" class="form-control txt1" id="user_personal_direccion_calle" placeholder="Calle" >
-               <input type="text" class="form-control txt1" id="user_personal_direccion_vivienda" placeholder="Vivienda" >
-             </fieldset>
- 
-             <fieldset>
-               <legend>Datos Contactos</legend>
-               <input type="email" class="form-control txt1" id="user_personal_contacto_email" placeholder="xxx@xx.com" >
-               <input type="tel" class="form-control txt1" id="user_personal_contacto_tel" placeholder="809-000-0000" >
-             </fieldset>
-           </div>
-         
-            
-           <label for="user_user_name" class="form-label">Usuario</label>
-           <input type="text" class="form-control txt1" id="user_user_name" >
+           <div class="mb-3 box_shadow_cajax">            
+           <label for="sub_user_user_name" class="form-label">Usuario</label>
+           <input type="text" class="form-control txt1" id="sub_user_user_name" >
            <div class="mb-3">
-             <label for="user_personal_lastname" class="form-label">ESTADO</label>              
-             <select name="estado" id="estado" class="form-control txt1">
+             <label for="sub_user_estado" class="form-label">ESTADO</label>              
+             <select name="sub_user_estado" id="sub_user_estado" class="form-control txt1">
                <option value="1">ACTIVO</option>
                <option value="0">INACTIVO</option>
              </select>
@@ -419,7 +448,7 @@
 
            </div>
         </form>
-        <button class="btn btn-primary form-control" id="bt_guardar">Guardar</button>
+        <button class="btn btn-primary form-control" id="bt_guardar_sub">Guardar</button>
       </section>
 
       <section id="lista_sub_usuarios">
